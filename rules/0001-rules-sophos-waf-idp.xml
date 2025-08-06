@@ -21,22 +21,6 @@
     <description>Sophos WAF blocked 403</description>
     <group>sophos,sophos-xgs,waf,anomaly,blocked,sophos_xgs_critical</group>
   </rule>
-
-  <rule id="100603" level="10">
-    <!-- Event WAF Score 5-9 -->
-    <if_sid>100601</if_sid>
-    <field name="message">Total Score: [5-9]</field>
-    <description>Sophos WAF anomaly score >=5</description>
-    <group>sophos,sophos-xgs,waf,anomaly,score_medium,sophos_xgs_critical</group>
-  </rule>
-
-  <rule id="100604" level="12">
-    <!-- Event WAF Score >=10 -->
-    <if_sid>100601</if_sid>
-    <field name="message">Total Score: [1-9][0-9]</field>
-    <description>Sophos WAF anomaly score >=10</description>
-    <group>sophos,sophos-xgs,waf,anomaly,score_high,sophos_xgs_critical</group>
-  </rule>
 </group>
 
 <group name="sophos_xgs_idp,">
