@@ -1,0 +1,104 @@
+Documentation – Wazuh + Sophos XGS (WAF & IDP)
+This document explains exactly how to set up the custom Sophos XGS decoders and rules in this repository and how to verify they work using the Wazuh Web GUI.
+Follow the order: Decoders first, then Rules, then Test.
+
+Repository files used below:
+
+decoders/
+  0001-decoder-sophos-xgs-waf-anomaly.xml
+  0002-decoder-sophos-xgs-idp.xml
+
+rules/
+  0001-rules-sophos-waf-idp.xml
+
+samples/
+  sample-waf.log
+  sample-idp.log
+1) Install Decoders via the Wazuh Web GUI
+Install both decoders first so that Phase 2 (decoded fields) is available in the GUI log tester.
+
+File names
+
+0001-decoder-sophos-xgs-waf-anomaly.xml
+
+0002-decoder-sophos-xgs-idp.xml
+
+Steps
+
+Log in to the Wazuh Web GUI.
+
+Go to Management → Decoders (or Resources → Decoders, depending on version).
+
+Click New file / Create.
+
+Enter the file name: 0001-decoder-sophos-xgs-waf-anomaly.xml.
+
+Open decoders/0001-decoder-sophos-xgs-waf-anomaly.xml from this repo, copy its entire content (including the <decoders>...</decoders> root), paste it into the editor, and click Save.
+After saving, use the Restart manager button offered by the GUI to apply changes.
+
+Repeat steps 3–5 for 0002-decoder-sophos-xgs-idp.xml using the content from decoders/0002-decoder-sophos-xgs-idp.xml, then Save and Restart manager via the GUI.
+
+Result: The manager now knows how to extract Sophos WAF and IDP fields (Phase 2).
+
+2) Install Rules via the Wazuh Web GUI
+Add the rules so that Phase 3 (rule matches/alerts) is available in the GUI log tester.
+
+File name
+
+0001-rules-sophos-waf-idp.xml
+
+Steps
+
+Go to Management → Rules (or Resources → Rules).
+
+Click New file / Create.
+
+Enter the file name: 0001-rules-sophos-waf-idp.xml.
+
+Open rules/0001-rules-sophos-waf-idp.xml from this repo, copy its entire content (including the <rules>...</rules> root), paste it into the editor, and click Save.
+After saving, use the Restart manager button offered by the GUI to apply changes.
+
+Result: The manager now evaluates Sophos WAF & IDP events against your custom rules (Phase 3).
+
+3) Test in the GUI (Log tester)
+Use the GUI log tester to confirm both decoding (Phase 2) and rule hits (Phase 3).
+
+Steps
+
+Open Tools → Log test (or Rule tester).
+
+From samples/sample-waf.log, copy one full WAF log line, paste it, and click Run.
+
+Phase 2 should show WAF fields such as: reason, http_status, url, http_method, http_query, domain, srcip, dstip, protocol, message, content_type, http_user_agent, http_response_time, bytes_sent, bytes_received, fw_rule_id, fw_rule_name, fw_rule_section, and total_score (parsed from message).
+
+Phase 3 should show WAF rule hits (e.g., 100601 anomaly; 100602 blocked 403 with score logic; 100603/100604/100605 for score tiers).
+
+Repeat with samples/sample-idp.log.
+
+Phase 2 should show IDP fields: classification, rule_priority, srcip, dstip (plus log_type).
+
+Phase 3 should show IDP rule hits: 100620 (base), and 100621 (Drop) or 100622 (Detect).
+
+If you see the expected fields and rule IDs, your setup is good.
+
+4) View and Filter in Discover (OpenSearch Dashboards)
+Open Discover and select index pattern wazuh-alerts-*.
+
+Primary filter (recommended)
+
+Use this single filter to get all relevant results:
+
+rule.groups:"sophos_xgs_critical"
+Every important rule in this pack is tagged with sophos_xgs_critical (except the top “collect all traffic” rule).
+This makes it an excellent filter for critical/meaningful logs from both WAF and IDP.
+
+Recommended columns (add them from the left panel in Discover)
+
+data.log_type
+rule.description
+data.srcip
+data.dstip
+data.http_status
+data.message
+data.fw_rule_name
+After adding the filter and columns, save the view using the Save button in the top-right corner of Discover, so you can quickly reuse it.
