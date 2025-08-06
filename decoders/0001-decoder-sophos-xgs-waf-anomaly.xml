@@ -118,9 +118,3 @@
     <regex type="pcre2">log_type="([^"]+)"</regex>
     <order>log_type</order>
   </decoder>
-  
-  <decoder name="sophos-waf">
-    <parent>sophos-waf</parent>
-    <regex type="pcre2">Total[[:space:]]Score:[[:space:]]([0-9]+)</regex>
-    <order>total_score</order>
-  </decoder>
