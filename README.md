@@ -22,4 +22,3 @@ Focus: clean extraction of key fields and simple, robust rules you can extend.
 
 > The decoders use `type="pcre2"` and modular sibling decoders for resilience.
 
-## Repository layout
