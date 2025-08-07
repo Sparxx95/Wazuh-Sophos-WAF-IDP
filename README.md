@@ -5,10 +5,10 @@ It focuses on reliable field extraction (PCRE2) and actionable alerts for both *
 
 ## What’s inside
 - **Decoders**
-  - `0001-decoder-sophos-xgs-waf-anomaly.xml` — parses WAF fields (e.g., reason, http_status, url, srcip/dstip, score, fw_rule_*).
+  - `0001-decoder-sophos-xgs-waf-anomaly.xml` — parses WAF fields (e.g., reason, http_status, url, srcip/dstip, fw_rule_*).
   - `0002-decoder-sophos-xgs-idp.xml` — parses IDP fields (e.g., classification, rule_priority, srcip/dstip).
 - **Rules**
-  - `0001-rules-sophos-waf-idp.xml` — groups, severities, and score tiers; all important alerts carry the tag **`sophos_xgs_critical`**.
+  - `0001-rules-sophos-waf-idp.xml` — groups and severities; all important alerts carry the tag **`sophos_xgs_critical`**.
 - **Samples**
   - `samples/sample-waf.log`, `samples/sample-idp.log` — ready for the Wazuh log tester.
 
