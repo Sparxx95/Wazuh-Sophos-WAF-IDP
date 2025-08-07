@@ -33,7 +33,7 @@ Click New file / Create.
 
 Enter the file name: 0001-decoder-sophos-xgs-waf-anomaly.xml.
 
-Open decoders/0001-decoder-sophos-xgs-waf-anomaly.xml from this repo, copy its entire content (including the <decoders>...</decoders> root), paste it into the editor, and click Save.
+Open decoders/0001-decoder-sophos-xgs-waf-anomaly.xml from this repo, copy its entire content , paste it into the editor, and click Save.
 After saving, use the Restart manager button offered by the GUI to apply changes.
 
 Repeat steps 3–5 for 0002-decoder-sophos-xgs-idp.xml using the content from decoders/0002-decoder-sophos-xgs-idp.xml, then Save and Restart manager via the GUI.
@@ -55,7 +55,7 @@ Click New file / Create.
 
 Enter the file name: 0001-rules-sophos-waf-idp.xml.
 
-Open rules/0001-rules-sophos-waf-idp.xml from this repo, copy its entire content (including the <rules>...</rules> root), paste it into the editor, and click Save.
+Open rules/0001-rules-sophos-waf-idp.xml from this repo, copy its entire content , paste it into the editor, and click Save.
 After saving, use the Restart manager button offered by the GUI to apply changes.
 
 Result: The manager now evaluates Sophos WAF & IDP events against your custom rules (Phase 3).
@@ -69,15 +69,15 @@ Open Tools → Log test (or Rule tester).
 
 From samples/sample-waf.log, copy one full WAF log line, paste it, and click Run.
 
-Phase 2 should show WAF fields such as: reason, http_status, url, http_method, http_query, domain, srcip, dstip, protocol, message, content_type, http_user_agent, http_response_time, bytes_sent, bytes_received, fw_rule_id, fw_rule_name, fw_rule_section, and total_score (parsed from message).
+Phase 2 should show WAF fields such as: reason, http_status, url, http_method, http_query, domain, srcip, dstip, protocol, message, content_type, http_user_agent, http_response_time, bytes_sent, bytes_received, fw_rule_id, fw_rule_name, fw_rule_section.
 
-Phase 3 should show WAF rule hits (e.g., 100601 anomaly; 100602 blocked 403 with score logic; 100603/100604/100605 for score tiers).
+Phase 3 should show WAF rule hits (e.g., 100601 anomaly; 100602 blocked 403).
 
 Repeat with samples/sample-idp.log.
 
 Phase 2 should show IDP fields: classification, rule_priority, srcip, dstip (plus log_type).
 
-Phase 3 should show IDP rule hits: 100620 (base), and 100621 (Drop) or 100622 (Detect).
+Phase 3 should show IDP rule hits: 100620 (base), and 100621 (Drop) or 100622 (Servertiy Critical).
 
 If you see the expected fields and rule IDs, your setup is good.
 
