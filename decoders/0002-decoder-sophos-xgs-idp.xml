@@ -31,3 +31,15 @@
     <regex type="pcre2">dst_ip="([^"]+)"</regex>
     <order>dstip</order>
   </decoder>
+  
+  <decoder name="sophos-idp">
+    <parent>sophos-idp</parent>
+    <regex type="pcre2">fw_rule_name="([^"]+)"</regex>
+    <order>fw_rule_name</order>
+  </decoder>
+  
+  <decoder name="sophos-idp">
+    <parent>sophos-idp</parent>
+    <regex type="pcre2">message="([^"]+)"</regex>
+    <order>message</order>
+  </decoder>
