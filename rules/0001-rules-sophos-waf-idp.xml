@@ -59,7 +59,7 @@
   <!-- Major Severity -->
   <rule id="101624" level="12">
     <if_sid>101621</if_sid>
-    <match>severity="Moderate"</match>
+    <match>severity="Major"</match>
     <description>Sophos XGS IDP drop warning</description>
     <group>sophos,sophos-xgs,idp,drop,warning,sophos_xgs_critical</group>
   </rule>
