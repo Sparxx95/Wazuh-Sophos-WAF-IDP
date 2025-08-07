@@ -1,21 +1,21 @@
+<!-- Basic: all WAF-Events -->
 <group name="sophos_xgs_waf,">
-   <!-- Basis: jedes WAF-Event -->
   <rule id="100600" level="3">
     <field name="log_type">WAF</field>
     <description>Sophos WAF event</description>
     <group>sophos,sophos-xgs,waf</group>
   </rule>
 
+<!-- all WAF-Anomaly -->
   <rule id="100601" level="10">
-     <!-- Event WAF Anomaly -->
     <field name="log_type">WAF</field>
     <field name="reason">WAF Anomaly</field>
     <description>Sophos WAF anomaly</description>
     <group>sophos,sophos-xgs,waf,anomaly,sophos_xgs_critical</group>
   </rule>
 
+<!-- Shows all 403 Blocks -->
   <rule id="100602" level="12">
-    <!-- Event HTTP Code 403 -->
     <if_sid>100601</if_sid>
     <field name="http_status">403</field>
     <description>Sophos WAF blocked 403</description>
@@ -23,41 +23,50 @@
   </rule>
 </group>
 
+
+  <!-- Basic: all IDP-Events -->
 <group name="sophos_xgs_idp,">
-  <!-- Basis: jedes IDP-Event -->
-  <rule id="100620" level="3">
+  <rule id="101620" level="3">
     <match>log_type="IDP"</match>
     <description>Sophos XGS IDP event</description>
     <group>sophos,sophos-xgs,idp,sophos_xgs_critical</group>
   </rule>
 
   <!-- Drop (geblockt) -->
-  <rule id="100621" level="10">
-    <if_sid>100620</if_sid>
+  <rule id="101621" level="7">
+    <if_sid>101620</if_sid>
     <match>log_subtype="Drop"</match>
     <description>Sophos XGS IDP drop</description>
     <group>sophos,sophos-xgs,idp,drop,sophos_xgs_critical</group>
   </rule>
 
-  <!-- Scharf schalten bei Critical -->
-  <rule id="100622" level="12">
-    <if_sid>100621</if_sid>
+  <!-- Critical Severity -->
+  <rule id="101622" level="15">
+    <if_sid>101621</if_sid>
     <match>severity="Critical"</match>
     <description>Sophos XGS IDP drop critical</description>
     <group>sophos,sophos-xgs,idp,drop,critical,sophos_xgs_critical</group>
   </rule>
 
-  <!-- Warning als moderat -->
-  <rule id="100623" level="9">
-    <if_sid>100621</if_sid>
-    <match>severity="Warning"</match>
+  <!-- Moderate Severity -->
+  <rule id="101623" level="9">
+    <if_sid>101621</if_sid>
+    <match>severity="Moderate"</match>
+    <description>Sophos XGS IDP drop warning</description>
+    <group>sophos,sophos-xgs,idp,drop,warning,sophos_xgs_critical</group>
+  </rule>
+  
+  <!-- Major Severity -->
+  <rule id="101623" level="12">
+    <if_sid>101621</if_sid>
+    <match>severity="Moderate"</match>
     <description>Sophos XGS IDP drop warning</description>
     <group>sophos,sophos-xgs,idp,drop,warning,sophos_xgs_critical</group>
   </rule>
 
-  <!-- Optional: reine Detect/Allow (kein Drop) sichtbar machen -->
-  <rule id="100624" level="5">
-    <if_sid>100620</if_sid>
+  <!-- Optional: show Detect/Allow -->
+  <rule id="101624" level="5">
+    <if_sid>101620</if_sid>
     <match>log_subtype="Detect"</match>
     <description>Sophos XGS IDP detect</description>
     <group>sophos,sophos-xgs,idp,detect,sophos_xgs_critical</group>
